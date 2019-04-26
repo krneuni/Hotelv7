@@ -1,0 +1,40 @@
+﻿@model IEnumerable<VLO.Models.Mesa>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Mesas</h2>
+<p>
+    <a href="@Url.Action("Create","Mesas")" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+</p>
+<div class="row col-md-12 table-responsive" style="margin-top:10px">
+    <table class="table table-bordered" style="background-color:#FFF">
+        <tr style="background-color:#E6E6E6">
+            <th>
+                @Html.DisplayNameFor(model => model.NumMesa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumMesa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @*@Html.ActionLink(" ", "Edit", new { id = item.IdMesa }, new { @class = "btn btn-warning glyphicon glyphicon-refresh" })*@
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdMesa }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,0 +1,108 @@
+﻿@model VLO.Models.SolicitudViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Solicitud de utencilios</h2>
+
+<div class="col-md-12">
+    <div class="col-md-6">
+        <form action="/Prestamos/AddPrest" method="post">
+            <div class="form-group">
+                <label><strong>Empleado: </strong></label>
+                <label>@Session["nombre"]</label>
+            </div>
+            <input type="hidden" name="mesa" value="@ViewBag.mesa" />
+
+            <table class="table table-bordered" style="background-color:#FFF">
+                <thead>
+                    <tr>
+                        <td>N°</td>
+                        <td>Producto</td>
+                        <td>Cantidad</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id="detalle">
+                   
+                </tbody>
+            </table>
+            <a href="@Url.Action("Index","Home")" class="btn btn-danger btn-rounded">Cancelar</a>
+            <button type="submit" class="btn btn-green btn-rounded">Solicitar</button>
+
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h3 style="font-weight:bold">Productos</h3>
+        <div class="col-md-12" style="margin-top:10px;height:450px; overflow:auto">
+            @foreach (var item in Model.Productos)
+            {
+                if (item.IdCategoria == 2)
+                {
+                    <div class="col-md-6">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h3>@item.Nombre</h3>
+                                <p>
+                                    <a data-toggle="modal" data-target="#modal_@item.IdProducto" class="btn btn-green">Solicitar</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_@item.IdProducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Descripcion del Producto</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h1>@item.Nombre</h1>
+                                    <label>Cantidad:</label>
+                                    <input type="number" id="cantidad__@item.IdProducto" min="1" max="99" name="cantidad" value="1" required class="form-control" />
+                                    
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" onclick="addPrest(@item.IdProducto, '@item.Nombre','cantidad__@item.IdProducto')" class="btn btn-green">Solicitar</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function addPrest(id, producto, cantidad) {
+        try {
+            var ccantidad = parseFloat($("#" + cantidad).val());
+            var detalle = `
+            <tr id="tr`+ id + `">
+                <td>`+ id + `
+                    <input type="hidden" value='`+ id + `' name="id[]">
+                    <input type="hidden" value='`+ ccantidad + `' name="cantidad[]">
+                </td>
+                <td>`+ producto + `</td>
+                <td>`+ ccantidad + `</td>
+                <td></td>
+            </tr>
+        `;
+
+            $("#tr" + id).remove();
+
+            $("#detalle").append(detalle);
+            alert("Agregado Exitosamente");
+        }
+        catch (ex) {
+            alert(ex);
+        }
+
+    }
+</script>

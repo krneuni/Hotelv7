@@ -1,0 +1,67 @@
+﻿@model IEnumerable<VLO.Models.Menu>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Menus</h2>
+
+<p>
+    <a href="@Url.Action("Create","Menus")" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+</p>
+<form action="@Url.Action("Index","Menus")" method="post">
+    <div class="form-group">
+        <div class="row col-md-12">
+            <div class="col-md-6">
+                <input type="text" name="txtbuscar" value="" class="form-control" placeholder=" Digite nombre" autocomplete="off" />
+            </div>
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-info" name="btn" value="BUSCAR" />
+            </div>
+        </div>
+    </div>
+</form>
+<br />
+<br />
+<div class="row col-md-12 table-responsive" style="margin-top:10px">
+    <table class="table table-bordered" style="background-color:#FFF">
+        <tr style="background-color:#E6E6E6">
+            <th>
+                @Html.DisplayNameFor(model => model.TipoMenu.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoMenu.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdMenu }, new { @class = "btn btn-warning glyphicon glyphicon-refresh" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdMenu }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

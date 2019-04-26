@@ -1,0 +1,49 @@
+﻿@model VLO.Models.Receta
+
+@{
+    ViewBag.Title = "Modificar";
+}
+
+<h2>Modificar Receta</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdReceta)
+
+        <div class="form-group col-md-8">
+            @Html.LabelFor(model => model.CantidadUtilizada, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CantidadUtilizada, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CantidadUtilizada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-8">
+            @Html.LabelFor(model => model.IdProducto, "Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdProducto", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdProducto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-8">
+            @Html.LabelFor(model => model.IdMenu, "Menu", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdMenu", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdMenu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-info" />
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}

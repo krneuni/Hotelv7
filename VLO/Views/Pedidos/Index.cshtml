@@ -1,0 +1,53 @@
+﻿@model IEnumerable<VLO.Models.Pedido>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Pedidos</h2>
+
+<p>
+    <a href="@Url.Action("Create","Pedidos")" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+</p>
+<div class="row col-md-12 table-responsive" style="margin-top:10px">
+    <table class="table table-bordered" style="background-color:#FFF">
+        <tr style="background-color:#E6E6E6">
+            <th>
+                @Html.DisplayNameFor(model => model.Usuarios.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesa.NumMesa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Usuarios.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mesa.NumMesa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdPedido }, new { @class = "btn btn-warning glyphicon glyphicon-refresh" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdPedido }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

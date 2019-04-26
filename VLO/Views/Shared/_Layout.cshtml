@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Vista Las Olas</title>
+
+    <!-- ================= Favicon ================== -->
+    <!-- Standard -->
+    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
+    <!-- Retina iPad Touch Icon-->
+    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
+    <!-- Retina iPhone Touch Icon-->
+    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
+    <!-- Standard iPad Touch Icon-->
+    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
+    <!-- Standard iPhone Touch Icon-->
+    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
+
+    <!-- Styles -->
+    <link href="~/Content/theme/one/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/themify-icons.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/weather-icons.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/mmc-chat.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/sidebar.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/unix.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/style.css" rel="stylesheet">
+    <link href="~/Content/theme/one/css/sweetalert.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+</head>
+
+<body class="">
+
+    <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+        <div class="nano has-scrollbar">
+            <div class="nano-content" tabindex="0" style="right: -12px;">
+                
+
+                @{
+                    int rol = Convert.ToInt32(Session["roles"]);
+                    if (rol == 1)
+                    {
+                        @Html.Partial("_Menu_Administrador")
+                    }
+                    else if (rol == 2)
+                    {
+                        @Html.Partial("_Menu_Cocinero")
+                    }
+                    else if (rol == 3)
+                    {
+                        @Html.Partial("_Menu_Mesero")
+                    }
+                    else if (rol == 4)
+                    {
+                        @Html.Partial("_Recepcion")
+
+                    }
+                }
+            </div>
+            <div class="nano-pane"><div class="nano-slider" style="height: 23px; transform: translate(0px, 0px);"></div></div>
+        </div>
+    </div><!-- /# sidebar -->
+
+
+
+
+    <div class="header">
+        <div class="pull-left">
+            <div class="logo"><a href="@Url.Action("Index","Ordenes")"><span>Vistas las Olas</span></a></div>
+            <div class="hamburger sidebar-toggle">
+                <span class="line"></span>
+
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+        </div>
+        <div class="pull-right p-r-15">
+            <ul>
+                <li class="header-icon dib">
+                    @Session["nombre"]
+                </li>
+                <li class="header-icon dib">
+                    @Html.ActionLink(" ", "LogOut", "Account", new { area = "" }, new { @class = "ti-power-off" })
+                    @*<a href='@Html.Action("LogOut", "Account")' class=""><span>Cerrar</span></a>*@
+                    @*@Html.ActionLink("Cerrar Sesión", "LogOut", "Account", new { area = "" }, new { @class = "glyphicon glyphicon-log-out" })*@
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                @RenderBody()
+            </div><!-- /# container-fluid -->
+        </div><!-- /# main -->
+    </div><!-- /# content wrap -->
+
+
+    <script src="~/Content/theme/one/js/sweetalert.min.js"></script>
+    <script src="~/Content/theme/one/js/jquery.min.js"></script><!-- jquery vendor -->
+    <script src="~/Content/theme/one/js/jquery.nanoscroller.min.js"></script><!-- nano scroller -->
+    <script src="~/Content/theme/one/js/sidebar.js"></script><!-- sidebar -->
+    <script src="~/Content/theme/one/js/bootstrap.min.js"></script><!-- bootstrap -->
+    <!--  Chart js -->
+    <!-- // Chart js -->
+    <!--  Datamap -->
+    <script src="~/Content/theme/one/js/d3.min.js"></script>
+    <script src="~/Content/theme/one/js/topojson.js"></script>
+    <!-- // Datamap -->
+    <script src="~/Content/theme/one/js/jquery.simpleWeather.min.js"></script>
+    <script src="~/Content/theme/one/js/weather-init.js"></script>
+    <script src="~/Content/theme/one/js/owl.carousel.min.js"></script>
+    <script src="~/Content/theme/one/js/owl.carousel-init.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Content/theme/one/js/scripts.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <style>
+        .mostrar {
+            display: block;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.dtMant').DataTable();
+            // var dt = $('.dtMant2').DataTable();
+        });
+        function MotrarDetail(dom) {
+            $(".details").hide();
+            //$(dom).addClass("mostrar");
+            if ($(dom).hasClass("mostrar")) {
+                $(dom).removeClass("mostrar");
+                $(dom).hide();
+            } else {
+
+                $(dom).addClass("mostrar");
+                $(dom).show();
+            }
+        }
+    </script>
+    <!-- scripit init-->
+    @RenderSection("scripts", false)
+</body>
+</html>
+

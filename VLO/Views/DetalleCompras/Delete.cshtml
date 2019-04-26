@@ -1,0 +1,79 @@
+﻿@model VLO.Models.DetalleCompra
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminando compra...</h2>
+
+<h3>¿Estas seguro que deseas eliminar?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Productos.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Productos.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedores.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedores.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCompra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCompra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-default" })
+    </div>
+    }
+</div>

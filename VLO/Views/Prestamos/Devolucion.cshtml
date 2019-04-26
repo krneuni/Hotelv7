@@ -1,0 +1,71 @@
+﻿@model VLO.Models.SolicitudViewModel
+@{
+    ViewBag.Title = "Devoluciones";
+}
+
+<h2>Devoluciones</h2>
+<div>
+    <hr />
+    <div class="row col-md-12">
+        @foreach (var item in Model.Prestamos)
+        {
+            if (item.IdUser == Convert.ToInt32(Session["Id"]))
+            {
+                <div class="thumbnail col-md-4">
+                    <div class="caption">
+                        Devolucion
+                    </div>
+                    <div>
+                        <p>Producto: @item.Productos.Nombre</p>
+                        <p>Cantidad: @item.Cantidad</p>
+                        <p>
+                            Estado:
+                            @if (item.Estado == 1)
+                            {
+                                <span class="badge badge-danger">
+                                    En espera de confirmación
+                                </span>
+                            }
+                            else if (item.Estado == 2)
+                            {
+                                <span class="badge badge-success">
+                                    Confirmado
+                                </span>
+                            }
+                            else if (item.Estado == 3)
+                            {
+                                <span class="badge badge-warning">
+                                    Retirado
+                                </span>
+                            }
+                            else if (item.Estado == 4)
+                            {
+                                <span class="badge badge-dark">
+                                    Devuelto
+                                </span>
+                            }
+                        </p>
+                        <p>Cantidad a devolver:</p>
+                        <form method="post" action="/Prestamos/Devolver">
+                            <input type="number" class="" min="1" max="10" name="cant" @*value="@item.Cantidad"*@ required />
+                            @*<input type="hidden" value="@item.Cantidad" name="cant" />*@
+                            <input type="hidden" value="@item.IdPrestamo" name="idprestamos" />
+                            <input type="submit" value="Devolver" class="btn btn-danger btn-rounded" />
+                        </form>
+
+                        @*<a class="btn btn-danger btn-rounded" href="/Prestamos/Devolver?idprestamos=@item.IdPrestamo?cant=@item.Cantidad">Devolver</a>*@
+
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+</div>
+@section scripts{
+    <script>
+        setInterval(function () {
+            window.location.reload();
+        }, 10000
+        );</script>
+}

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<VLO.Models.Productos>
+@{
+    ViewBag.Title = "Existencias";
+}
+
+<center><h2>Productos con poca existencia</h2></center>
+<div>
+    <hr />
+    <div class="row col-md-12">
+        <p>
+            <a href="@Url.Action("Create","DetalleCompras")" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Abastecer</a>
+        </p>
+        @foreach (var item in Model)
+        {
+            <div class="thumbnail col-md-4">
+                <div class="caption">
+                    Producto: @item.Nombre
+                </div>
+                <div>
+                    <p>Cantidad: @item.Cantidad @item.UnidadMedida</p>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

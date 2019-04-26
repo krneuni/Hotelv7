@@ -1,0 +1,49 @@
+﻿<ul>
+    <li class="label">Menu</li>
+
+    <li><a href="@Url.Action("Index","Ordenes")"><i class="ti-tablet"></i>  Mesas </a></li>
+    <li><a href="@Url.Action("OrdenesTerminadas","Ordenes")"><i class="ti-tablet"></i>  Ordenes </a></li>
+    <li><a href="@Url.Action("Pagos","Ordenes")"><i class="ti-money"></i>  Pagos </a></li>
+    <li class="label">Administracion</li>
+
+    <li><a asp-action="Ventas" asp-controller="Application"><i class="ti-bar-chart-alt"></i>Reporte Ventas</a></li>
+    <li><a href="@Url.Action("Index","Turnos")"><i class="ti-timer"></i> Turnos </a></li>
+    <li><a href="@Url.Action("Index","Asignacionturnos")"><i class="ti-wand"></i> Asignaciones </a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-package"></i> Prestamos<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Index","Prestamos")"><i class="ti-bag"></i> Prestamos </a></li>
+            <li><a href="@Url.Action("Solicitudes","Prestamos")"><i class="ti-share"></i> Solicitudes </a></li>
+            <li><a href="@Url.Action("Devolucion","Prestamos")"><i class="ti-share-alt"></i> Devoluciones </a></li>
+
+        </ul>
+    </li>
+
+
+
+    <li><a href="@Url.Action("Index","Mesas")"><i class="ti-layout-grid3-alt"></i> Mesas </a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-package"></i> Productos<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+
+            <li><a href="@Url.Action("Index","Productos")"><i class="ti-package"></i> Productos </a></li>
+            <li><a href="@Url.Action("Index","Categorias")"><i class="ti-harddrives"></i> Categorias </a></li>
+            <li ><a href="@Url.Action("Existencias","Productos")"><i class="ti-thumb-down"></i> Existencias</a></li>
+
+        </ul>
+    </li>
+    <li><a href="@Url.Action("Index","DetalleCompras")"><i class="ti-shopping-cart-full"></i> Compras </a></li>
+    <li><a href="@Url.Action("Index","Proveedores")"><i class="ti-agenda"></i> Proveedores </a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-folder"></i> Menus<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Index","Menus")"><i class="ti-comment"></i> Menus </a></li>
+            <li><a href="@Url.Action("Index","TipoMenus")"><i class="ti-layout-grid2-thumb"></i>Tipo Menus </a></li>
+            <li><a href="@Url.Action("Index","Recetas")"><i class="ti-layout-list-thumb"></i> Recetas </a></li>
+        </ul>
+    </li>
+    <li class="label">Cuentas</li>
+
+    <li><a href="@Url.Action("Index","Usuarios")"><i class="ti-user"></i> Usuarios </a></li>
+    <li><a href="@Url.Action("Index","Roles")"><i class="ti-info-alt"></i> Roles </a></li>
+</ul>

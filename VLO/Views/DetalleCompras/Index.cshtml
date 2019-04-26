@@ -1,0 +1,93 @@
+﻿@model IEnumerable<VLO.Models.DetalleCompra>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Compras</h2>
+
+<p>
+    <a href="@Url.Action("Create","DetalleCompras")" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+</p>
+@*<form action="@Url.Action("Index","DetalleCompras")" method="post" id="frm">
+
+    <div>
+        <div class="form-group has-success col-md-12" style="border-color:black;">
+                
+                <div class="col-md-4">
+                    <select name="Opciones" class="form-control has-success ">
+                        <option value="0">Selecciona una opcion </option>
+                        <option value="1">Proveedor</option>
+                        <option value="2">Fecha</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="txtbuscar" value="" class="form-control" placeholder="Busqueda..." autocomplete="off" />
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" class="btn btn-info" name="btn" value="BUSCAR" />
+                </div>
+        </div>
+    </div>
+</form>*@
+<div class="row col-md-12 table-responsive" style="margin-top:10px">
+    <table class="table table-bordered" style="background-color:#FFF">
+        <tr style="background-color:#E6E6E6">
+            <th>
+                @Html.DisplayNameFor(model => model.Productos.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Proveedores.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Productos.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proveedores.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaCompra)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdDetalle }, new { @class = "btn btn-warning glyphicon glyphicon-refresh" })
+                    @*@Html.ActionLink("Details", "Details", new { id=item.IdDetalle }) |*@
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdDetalle }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

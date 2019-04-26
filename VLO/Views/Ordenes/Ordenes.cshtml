@@ -1,0 +1,42 @@
+﻿@model VLO.Models.CocinaViewModel
+
+@{
+    ViewBag.Title = "Ordenes";
+}
+
+<h2>Ordenes</h2>
+
+<div>
+    <hr />
+    <div class="row col-md-12">
+        @foreach (var item in Model.pedidos)
+        {
+            <div class="thumbnail col-md-4">
+                <div class="caption">
+                    Orden para la mesa: @item.Mesa.NumMesa
+                </div>
+                <div>
+                    <p>Cliente: @item.Cliente</p>
+                    @{ var Adet = Model.detalle.Where(x => x.IdPedido == item.IdPedido).ToList();}
+                    @foreach (var item2 in Adet)
+                    {
+
+                        var Menu = Model.menus.Where(x => x.IdMenu == item2.IdMenu).FirstOrDefault();
+
+                        <p>Menu: @Menu.Nombre</p>
+                        <p>Cantidad: @item2.cantidad</p>
+                        
+                     <a class="btn btn-danger btn-rounded" href="/Ordenes/TerminarOrdenCocina?iddetalle=@item2.IdDetalle">Terminar</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+    <script>
+setInterval(function () {
+            window.location.reload();
+        }, 50000
+        );</script>
+}

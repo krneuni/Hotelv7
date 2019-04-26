@@ -1,0 +1,53 @@
+﻿@model IEnumerable<VLO.Models.Factura>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Factura</h2>
+
+<p>
+    @Html.ActionLink(" Nuevo", "Create", null, new { @class = "btn btn-success glyphicon glyphicon-plus" })
+</p>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Pedido
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descuento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFactura)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DetallePedido.IdDetalle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descuento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaFactura)
+                </td>
+                <td>
+
+                    @Html.ActionLink(" ", "Delete", new { id = item.NumFactura }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

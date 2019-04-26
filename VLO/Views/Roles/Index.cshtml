@@ -1,0 +1,35 @@
+﻿@model IEnumerable<VLO.Models.Roles>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Roles de Usuario</h2>
+
+<p>
+    <a href="@Url.Action("Create","Roles")" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+</p>
+<div class="row col-md-12 table-responsive" style="margin-top:10px">
+    <table class="table table-bordered" style="background-color:#FFF">
+        <tr style="background-color:#E6E6E6">
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdRol }, new { @class = "btn btn-warning glyphicon glyphicon-refresh" }) |
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdRol }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

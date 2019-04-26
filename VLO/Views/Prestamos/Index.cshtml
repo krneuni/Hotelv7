@@ -1,0 +1,77 @@
+﻿@model IEnumerable<VLO.Models.Prestamos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Prestamos por empleados</h2>
+
+<p>
+    <a href="@Url.Action("Create","Prestamos")" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+</p>
+<div class="row col-md-12 table-responsive" style="margin-top:10px">
+    <table class="table table-bordered" style="background-color:#FFF">
+        <tr style="background-color:#E6E6E6">
+            <th>
+                @Html.DisplayNameFor(model => model.Usuarios.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Productos.Nombre)
+            </th>
+            <th>Cantidad a retirar</th>
+            <th>Fecha de prestamo</th>
+            <th>Estado</th>
+            <th>Cantidad devuelta</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Usuarios.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Productos.Nombre)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>@item.Fecha</td>
+                <td>
+                    @if (item.Estado == 1)
+                    {
+                        <span class="badge badge-danger">
+                            En espera de confirmación
+                        </span>
+                    }
+                    else if (item.Estado == 2)
+                    {
+                        <span class="badge badge-success">
+                            Confirmado
+                        </span>
+                    }
+                    else if (item.Estado == 3)
+                    {
+                        <span class="badge badge-warning">
+                            Retirado
+                        </span>
+                    }
+                    else if (item.Estado == 4)
+                    {
+                        <span class="badge badge-dark">
+                            Devuelto
+                        </span>
+                    }
+                            </td>
+                <td>@item.CantidadDevuelta</td>
+                @*<td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdPrestamo }, new { @class = "btn btn-warning glyphicon glyphicon-refresh" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdPrestamo }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                </td>*@
+            </tr>
+        }
+
+    </table>
+</div>

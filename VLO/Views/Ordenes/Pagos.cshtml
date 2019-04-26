@@ -1,0 +1,179 @@
+﻿@model VLO.Models.CocinaViewModel
+@{
+    ViewBag.Title = "Pagos";
+}
+@{
+    int Item = 1;
+    var IdOrden = "0";
+    try
+    {
+        IdOrden = Convert.ToString(Model.detalle.FirstOrDefault().IdPedido);
+    }
+    catch
+    {
+        IdOrden = "0";
+    }
+    var totalapagar = 0.0;
+  
+
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var menu in Model.detalle)
+                        {
+                            if (menu != null)
+                            {
+                                <tr>
+                                    @{
+                                        var producto = Model.menus.Where(x => x.IdMenu == menu.IdMenu).First();
+                                    }
+                                    <th class="row">@Item</th>
+                                    <th>@menu.Pedido.Cliente</th>
+                                    <td>@producto.Nombre</td>
+                                    <td>
+                                        @if (menu.Estado == 1)
+                                        {
+                                            <span class="badge badge-danger">
+                                                En Cocina
+                                            </span>
+                                        }
+                                        else if (menu.Estado == 2)
+                                        {
+                                            <span class="badge badge-success">
+                                                Terminado
+                                            </span>
+                                        }
+                                        
+                                        else if (menu.Estado == 3)
+                                        {
+                                            <span class="badge badge-dark">
+                                                Pagado
+                                            </span>
+                                        }
+
+                                    </td>
+                                    <td>@menu.cantidad</td>
+                                    <td class="color-primary">@producto.Precio.ToString("C")</td>
+                                    <td class="color-primary">@((producto.Precio * menu.cantidad).ToString("C"))</td>
+                                </tr>
+                                                Item = Item + 1;
+                                                totalapagar += (producto.Precio * menu.cantidad);
+                                            }
+                                        }
+
+                    </tbody>
+                    <tfoot>
+                        <form action="/Ordenes/RealizarPago" method="post">
+                            <input type="hidden" name="monto" id="monto" value="@totalapagar" />
+                            <tr>
+                                <td colspan="4" style="text-align:right;font-size:20px;color:#000">Monto:</td>
+                                <td colspan="2" style="font-size:20px;color:#000">@totalapagar.ToString("C")</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="text-align:right;font-size:20px;color:#000">Descuento:</td>
+                                <td colspan="2" style="font-size:20px;color:#000">
+                                    $<input type="text" onkeyup="TotalPago()" name="Descuento" id="descuento" style="font-size:12px" value="0.0" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" style="text-align:right;font-size:20px;color:#000">Descripción</td>
+                                <td colspan="2" style="font-size:20px;color:#000">
+                                    : <input type="text" name="Descripcion" id="Descripcion" style="font-size:12px" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" style="text-align:right;font-size:20px;color:#000">Propina:</td>
+                                <td colspan="2" style="font-size:20px;color:#000">
+                                    $<input readonly value="@(totalapagar * 0.10)" type="text" name="propina" id="propina" style="font-size:12px" />
+                                </td>
+                            </tr>
+                            @{
+                                var totalBruto = (totalapagar + (totalapagar * 0.1));
+                             }
+                            <input type="hidden" name="Total" id="Total" value="@totalBruto" />
+                            @*<tr>
+                                <td colspan="4" style="text-align:right;font-size:20px;color:#000">Forma de Pago:</td>
+                                <td colspan="2" style="font-size:20px;color:#000">
+                                    <select name="formapago" class="form-control">
+                                        <option value="CASH">Efectivo</option>
+                                        <option value="CCD">Tarjeta de Credito</option>
+                                    </select>
+                                </td>
+                            </tr>*@
+                            <tr>
+                                <td colspan="4" style="text-align:right;font-size:20px;color:#000">Total a Pagar:</td>
+                                <td colspan="1" style="font-size:20px;color:#000">
+                                    $<input readonly type="text" name="txttotal" id="txttotal" value="@totalBruto"/>
+                                    @*<span id="totalpagar" value="@totalBruto">@((totalapagar + (totalapagar * 0.10)).ToString("C"))</span>*@
+                                </td>
+
+                                <td colspan="1" style="font-size:20px;color:#000">
+                                    <input type="hidden" name="idDetalle" value="@Model.detalle.FirstOrDefault().IdDetalle" />
+                                    
+                                    <button class="btn btn-success btn-rounded" type="submit">
+                                        Recibir Pago
+                                    </button>
+                                </td>
+                            </tr>
+                        </form>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        //$(document).ready(function () {
+
+        //    $("#descuento").change(CalcularMontoNeto)
+        //    $("#propina").change(CalcularMontoNeto)
+
+        //});
+        //function CalcularMontoNeto() {
+        //    var descuento = $("#descuento").val() == "" ? "0" : $("#descuento").val();
+        //    var propina = $("#propina").val() == "" ? "0" : $("#propina").val();
+        //    var monto = $("#monto").val() == "" ? "0" : $("#monto").val();
+
+        //    var totalneto = (parseFloat(monto) - parseFloat(descuento)) + parseFloat(propina);
+        //    $("#totalpagar").html(totalneto.toFixed(2));
+        //    $("#txttotal").val(totalneto.toFixed(2))
+        //}
+        function TotalPago() {1           
+            var pago = $("#Total").val();
+            //alert(pago);
+            var desc = $("#descuento").val();
+            //alert(desc);
+            if (desc == "") {
+                $("#txttotal").val(totalNeto);
+            } else {
+                if (parseFloat(desc) > parseFloat( pago)) {
+                    alert("El descuento no puede ser mayor que el pago.");
+                } else {
+                    var totalNeto = parseFloat(pago) - parseFloat(desc);
+                    $("#txttotal").val(totalNeto);
+                    $("#totalpagar").val(totalNeto);
+                }
+            }
+
+        }
+    </script>
+}

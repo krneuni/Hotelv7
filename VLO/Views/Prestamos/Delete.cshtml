@@ -1,0 +1,39 @@
+﻿@model VLO.Models.Prestamos
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminando solicitud...</h2>
+
+<h3>¿Estas seguro que deseas eliminarlo?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuarios.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuarios.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Productos.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Productos.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-default" })
+    </div>
+    }
+</div>

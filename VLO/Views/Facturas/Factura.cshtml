@@ -1,0 +1,138 @@
+﻿@*@model IEnumerable<VLO.Models.Factura>
+@{*@
+@{ Layout = null;}
+@{
+    var total = 0.00;
+}
+<style>
+
+    * {
+        -webkit-print-color-adjust: exact;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+
+            <img src="~/Content/Logo.png" alt="Logo" style="background-color:black;padding:10px;width:400px" />
+        </td>
+        <td>
+            <div style="text-align:center;border:1px solid #000; border-radius:10px;padding:10px;margin:10px;height:100px;width:150px">
+                <h2 style="margin-top:0px;margin-bottom:0px">Factura</h2>
+                <p style="margin-top:0px;font-size:10px;">168M000F</p>
+                <h2 style="color:red;margin-top: 10px;margin-bottom:10px">N° 0000</h2>
+                <p style="margin-top:0px;font-size:10px;margin-bottom:0">N.R.C 233085-5</p>
+                <p style="margin-top:0px;font-size:10px;">NIT. 1206-281164-101-5</p>
+            </div>
+        </td>
+
+    </tr>
+    <tr>
+        <td style="text-align:center">
+            <h3 style="margin-bottom:0px">DAVID AMILCAR ROMERO RODRÍGUEZ</h3>
+            <h4 style="margin-top:0">HOTEL Y RESTAURANTE</h4>
+            <p style="margin-bottom:0px">Calle a Conchaguita, Salida al Majague</p>
+            <p style="margin-bottom:0px;margin-top:0px">Playa Las Flores, Chirilagua, San Miguel</p>
+            <p style="margin-bottom:0px;margin-top:0px">Telefono: XXXX-XXXX</p>
+        </td>
+        <td>
+            <p style="margin-bottom:0px;margin-top:0px;font-size:12px;">Autorización de Imprenta N° 782 D.G.I.I</p>
+            <p style="margin-bottom:0px;margin-top:0px;font-size:12px;">Fecha de Autorización 23/07/1999</p>
+            <p>FECHA</p>
+        </td>
+    </tr>
+</table>
+<table style="border:1px solid #000;border-radius:10px">
+    <tr>
+        <td>
+            <p>Cliente:___________________________________________________________________________</p>
+            <p>Direccion:_________________________________________________________________________</p>
+            <p>NIT/DUI:________________________________Vta. a Cuenta de:__________________________</p>
+
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="10">
+</table>
+<table>
+    <tr style="font-size:15px;background:#000;color:#FFF">
+        <td>CANT.</td>
+        <td style="width:30%">DESCRIPCION</td>
+        <td>PRECIO UNITARIO</td>
+        <td>VENTAS NO SUJETAS</td>
+        <td>VENTAS EXTERNAS</td>
+        <td>VENTAS GRABADAS</td>
+    </tr>
+
+    @*@foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.DetallePedido.cantidad</td>
+            <td>@item.DetallePedido.Menu.Nombre</td>
+            <td>@item.DetallePedido.Menu.Precio</td>
+            <td>$0.00</td>
+            <td>$0.00</td>
+            <td>@((item.DetallePedido.cantidad * @item.DetallePedido.Menu.Precio).ToString("C"))</td>
+            @{
+                    total += (item.DetallePedido.cantidad * @item.DetallePedido.Menu.Precio);
+                }
+        </tr>
+
+    }*@
+</table>
+        </td>
+    </tr>
+<tr>
+    <td colspan="100">
+        <table style="width:100%">
+            <tr>
+                <td>Son:</td>
+                <td>Suma:</td>
+                @*@foreach (var item in Model)
+                {
+                    <td>Descripción: @item.Descripcion</td>
+                }*@
+                    <td></td>
+                    <td></td>
+                </tr>
+            <tr>
+                <td>
+                    <p>Llenar si la Operacion es igual o mayor a $200</p>
+                    <table>
+                        <tr>
+                            <td>RECIBIDO POR</td>
+                            <td>ENTREGADO POR</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Nombre:</p>
+                                <p>D.U.I:</p>
+                                <p>FIRMAS:</p>
+                            </td>
+                            <td>
+                                <p>Nombre:</p>
+                                <p>D.U.I:</p>
+                                <p>FIRMAS:</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                @*@foreach (var item in Model)
+                {*@
+                    <td colspan="2">
+                        <p>(-) IVA Retenido</p>
+                        <p>Sub-Total: @*@item.Precio*@</p>
+                        <p>10% PROPINA: @*@item.Propina*@</p>
+                        <p>Descuento: @*@item.Descuento*@</p>
+                        <p>Ventas no Sujetas</p>
+                        <p>Ventas Extensas</p>
+                        <p>Venta Total @*@total.ToString("C")*@</p>
+                    </td>
+                <td colspan="2"></td>
+                @*}*@
+            </tr>
+        </table>
+    </td>
+</tr>
+</table>
