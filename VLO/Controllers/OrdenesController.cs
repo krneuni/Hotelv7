@@ -64,22 +64,7 @@ namespace VLO.Controllers
             }
 
 
-            //var menu = db.Menus.Find(dp.IdMenu);
-            ////Buscar los menus en la receta
-            //var recmenu = (from u in db.Receta where u.IdMenu == menu.IdMenu select u).ToList();
-            ////Recorrer
-            //foreach (var io in recmenu)
-            //{
-            //    //Encontrar los productos que se utilizan
-            //    Productos de = db.Productos.Find(io.IdProducto);
-
-            //    //Resta de la cantidad que se pide menos la cantidad utilizada
-
-            //    var Descuento = io.CantidadUtilizada * dp.cantidad;
-            //    de.Cantidad = de.Cantidad - Descuento;
-            //    db.Entry(de).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //}
+           
 
             return Redirect("/Ordenes/Ordenes");
         }
@@ -118,8 +103,7 @@ namespace VLO.Controllers
 
             ViewBag.mesa = id;
            
-                //var dp = db.DetallePedido.Max(m => m.sesion);
-                //Session["session"] = dp + 1;
+                
                 var pedido = Convert.ToInt32(Session["pedido"]);
             var mesa= Convert.ToInt32(Session["mesa"]);
             if (pedido>0)
@@ -234,13 +218,21 @@ namespace VLO.Controllers
         }
 
         [HttpPost]
-        public ActionResult RealizarPago(double txttotal,int idDetalle, double Descuento, string Descripcion, double propina, AddOrdenViewModel cvm)
+        public ActionResult RealizarPago(double txttotal,int idPedido, int idDetalle, double Descuento, string Descripcion, double propina, AddOrdenViewModel cvm)
         {
             
+            //Session["pedido"] = 0;
+            //Session["mesa"] = 0;
+            //Session["pedidoid"]= 0;
+            Session.Remove("pedidoid");
+            Session.Clear();
+            Session["pedidoid"]=0;
+            Session.Remove("pedido");
+            Session.Clear();
             Session["pedido"] = 0;
+            Session.Remove("mesa");
+            Session.Clear();
             Session["mesa"] = 0;
-            Session["pedidoid"]= 0;
-
             Factura p = new Factura();
             //p.NumFactura =1;
             p.IdDetalle = idDetalle;
@@ -253,8 +245,9 @@ namespace VLO.Controllers
             db.SaveChanges();
 
 
-            var detalle = db.DetallePedido.Find(p.IdDetalle);
-            var det = (from x in db.DetallePedido where x.IdDetalle == detalle.IdDetalle select x).ToList();
+            //var detalle = db.DetallePedido.Find(p.IdDetalle);
+            //var det = (from x in db.DetallePedido where x.IdDetalle == detalle.IdDetalle select x).ToList();
+            var det = (from x in db.DetallePedido where x.IdPedido == idPedido select x).ToList();
             foreach (var i in det)
             {
                 DetallePedido de = db.DetallePedido.Find(i.IdDetalle);
@@ -266,29 +259,30 @@ namespace VLO.Controllers
             }
 
             //Buscar cada Pedido
-            var pedido = (from u in db.Pedido where u.IdPedido == detalle.IdPedido select u).ToList();
+            var pedido = (from u in db.Pedido where u.IdPedido == idPedido select u).ToList();
             //Recorrer
             foreach (var io in pedido)
             {
-                //DetallePedido de = db.DetallePedido.Find(io.IdPedido);
-                //de.Estado = 3;
-                //db.Entry(de).State = EntityState.Modified;
-                //db.SaveChanges();
-
                 Pedido pe = db.Pedido.Find(io.IdPedido);
                 pe.Estado = 3;
                 db.Entry(pe).State = EntityState.Modified;
                 db.SaveChanges();
             }
 
-            //var mesadetalle = db.DetallePedido.Find(p.IdDetalle);
-            //var detallepedido = (from m in db.Pedido where m.IdPedido == mesadetalle.IdPedido select m).FirstOrDefault();
-            //var pedidomesa = (from x in db.Mesa where x.IdMesa == detallepedido.IdMesa select x);
 
-            //Mesa d = db.Mesa.Find(pedidomesa);
-            //d.Estado = true;
-            //db.Entry(d).State = EntityState.Modified;
-            //db.SaveChanges();
+            //var dm = db.Mesa.Find(idDetalle);
+            //var mesa = (from x in db.Mesa where x.IdMesa == dm.IdMesa select x);
+
+            //foreach (var i in mesa)
+            //{
+            //    Mesa d = db.Mesa.Find(i.IdMesa);
+            //    d.Estado = true;
+            //    db.Entry(d).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return Redirect("Index");
+
+
+            //}
             return Redirect("Index");
         }
         
